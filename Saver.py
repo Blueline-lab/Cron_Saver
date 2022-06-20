@@ -12,7 +12,6 @@ import config
 import hashlib
 import csv
 
-from test import explorer
 
 
 class Saver:
@@ -28,7 +27,7 @@ class Saver:
 
     def copy_machine(self):
         try:
-            copytree(f"/home/{config.username}\Musique", self.dest)
+            copytree(f"/home/{str(config.username)}/Musique", self.dest)
             self.logs(f"Saving copy on {self.dest}")
         except:
             print("Error in copy")
@@ -47,10 +46,12 @@ class Saver:
             self.logs(f"Cannot rm copy {string_dest}")
 
     def new_device(self):
-        if str(os.system("hostname")) != config.hostname:
-            copytree(self.dest, "/home")
-            config.hostname = os.system("hostname")
-            self.logs(f"Changing device on {config.date} new device is {config.hostname}")
+        command = str(os.popen("hostname").read())
+        lift = command[0:4]
+        if lift != config.hostname:
+            copytree(self.dest, f"/home/{str(config.username)}/Musique")
+            config.hostname = command
+            self.logs(f"Changing device on {str(config.date)} new device is {str(config.hostname)}")
 
 
 
@@ -85,6 +86,7 @@ class Saver:
        
 
     def explorer(self):
+        check_device = self.new_device() 
         tree = self.tree()
         hasher= str(self.generate_hash_path(tree))
         read = str(self.read_csv())

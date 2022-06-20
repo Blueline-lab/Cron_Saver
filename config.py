@@ -1,13 +1,13 @@
 """Config file for Saverscript"""
 
 from datetime import date 
-import time
 
 
-hostname = "0"
+
+hostname = "line"
 username = "mecanics"
 date = date.today()
-mount = "/media/mecanics/STI"
+mount = "/media/mecanics/Transcend"
 destination_path = f"{mount}/Backup_from_{date}"
 
 
